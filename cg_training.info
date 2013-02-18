@@ -1,0 +1,5 @@
+name = CG Training
+description = Examples for the training exercices
+core = 7.x
+
+dependencies[] = devel

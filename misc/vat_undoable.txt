@@ -1,0 +1,35 @@
+{ "commerce_tax_rate_tva_france_19_6_" : {
+    "LABEL" : "Calculate TVA France 19.6%",
+    "PLUGIN" : "rule",
+    "REQUIRES" : [ "rules", "commerce_order", "commerce_tax" ],
+    "USES VARIABLES" : { "commerce_line_item" : { "label" : "Line item", "type" : "commerce_line_item" } },
+    "IF" : [
+      { "entity_has_field" : {
+          "entity" : [ "commerce-line-item:order" ],
+          "field" : "commerce_customer_billing"
+        }
+      },
+      { "OR" : [
+          { "data_is_empty" : { "data" : [ "commerce-line-item:order:commerce-customer-billing" ] } },
+          { "commerce_order_compare_address" : {
+              "commerce_order" : [ "commerce-line-item:order" ],
+              "address_field" : "commerce_customer_billing|commerce_customer_address",
+              "address_component" : "country",
+              "value" : "FR"
+            }
+          }
+        ]
+      }
+    ],
+    "DO" : [
+      { "commerce_tax_rate_apply" : {
+          "USING" : {
+            "commerce_line_item" : [ "commerce-line-item" ],
+            "tax_rate_name" : "tva_france_19_6_"
+          },
+          "PROVIDE" : { "applied_tax" : { "applied_tax" : "Applied tax" } }
+        }
+      }
+    ]
+  }
+}

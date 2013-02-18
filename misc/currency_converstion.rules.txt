@@ -1,0 +1,29 @@
+{ "rules_change_currency_to_eur" : {
+    "LABEL" : "Change currency to EUR",
+    "PLUGIN" : "rule",
+    "REQUIRES" : [ "rules" ],
+    "USES VARIABLES" : { "product" : { "label" : "Product", "type" : "node" } },
+    "IF" : [
+      { "entity_has_field" : { "entity" : [ "product" ], "field" : "field_product" } }
+    ],
+    "DO" : [
+      { "LOOP" : {
+          "USING" : { "list" : [ "product:field-product" ] },
+          "ITEM" : { "list_item" : "Current list item" },
+          "DO" : [
+            { "entity_fetch" : {
+                "USING" : { "type" : "commerce_product", "id" : [ "list-item:product-id" ] },
+                "PROVIDE" : { "entity_fetched" : { "entity_fetched" : "Product loaded" } }
+              }
+            },
+            { "data_set" : {
+                "data" : [ "entity-fetched:commerce-price:currency-code" ],
+                "value" : "EUR"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
