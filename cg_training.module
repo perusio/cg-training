@@ -57,39 +57,6 @@ function cg_training_entity_info_alter(&$entity_types) {
   );
 }
 
-/****************************************************************************
- ********************** CUSTOM RULES EVENT EXERCISE *************************
- ***************************************************************************/
-
-/**
- * Implements hook_rules_event_info().
- */
-function cg_training_rules_event_info() {
-  // Example of two similar events, one based on the node entity type as
-  // parameter and the other one with the product entity type as parameter.
-  $events['product_easter_egg'] = array(
-    'label' => t('User found an easter egg (product)'),
-    'group' => t('Commerce Product'),
-    'variables' => array(
-      'commerce_product' => array(
-        'type' => 'commerce_product',
-        'label' => t('Product triggering the event')
-      )
-    ),
-  );
-  $events['node_easter_egg'] = array(
-    'label' => t('User found an easter egg (node)'),
-    'group' => t('Node'),
-    'variables' => array(
-      'node' => array(
-        'type' => 'node',
-        'label' => t('Node triggering the event.')
-      )
-    ),
-  );
-  return $events;
-}
-
 /**
  * Implements hook_entity_view().
  */
