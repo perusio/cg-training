@@ -13,7 +13,7 @@ function cg_training_init() {
 
   $query->entityCondition('entity_type', 'node', '=')
     ->entityCondition('bundle', 'product_display', '=')
-    ->entityCondition('status', 1, '=')
+    ->propertyCondition('status', 1, '=')
     ->fieldCondition('field_product', 'product_id', 2, '=');
   $result = $query->execute();
 
